@@ -4,18 +4,14 @@
  *
  * Return: Always 0
  */
-int main(int argc, char **argv, char **env)
+int main(void)
 {
 	ssize_t status_read, tty = 1;
-	char *line = NULL, *cpline = NULL, *puntline,*arg = NULL, **args = NULL;
-/*	int status_execve, status;*/
-	pid_t pid;
+	char *line = NULL, *cpline = NULL, *puntline, *arg = NULL;
+	char **args = NULL;
 	size_t lineSize = 0;
-/*	args_t *arguments = NULL;*/
 
-	UNUSED(argc);
-	UNUSED(argv);
-	UNUSED(env);
+	UNUSED(args);
 
 	isatty(STDIN_FILENO) == 0 ? tty = 0 : tty;
 	do {
@@ -26,11 +22,11 @@ int main(int argc, char **argv, char **env)
 		{
 			break;
 		}
-		if (status_read != -1)
+		else
 		{
 			_strdup(line, &cpline);
 			puntline = cpline;
-			create_darr(&args, cpline);
+/*			create_darr(&args, cpline);*/
 			for (; (arg = strtok(cpline, " \t\n")); cpline = NULL)
 			{
 				if (arg == NULL)
@@ -39,7 +35,7 @@ int main(int argc, char **argv, char **env)
 				}
 			}
 		}
-		free(puntline)
+		free(puntline);
 		free(line);
 		line = NULL;
 	} while (1);
